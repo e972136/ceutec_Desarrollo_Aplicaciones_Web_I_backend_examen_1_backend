@@ -56,8 +56,8 @@ CREATE TABLE repuesto(
 );
 
 
-INSERT INTO aseguradora(id, nombre)
-VALUES (1,'Particular'),(2,'Ficohsa Seguros'),(3,'MAFFRE');
+INSERT INTO aseguradora(nombre)
+VALUES ('Particular'),('Ficohsa Seguros'),('MAFFRE');
 
 INSERT INTO estimacion(id,asegurado,estimado_por,fecha_evaluacion,aseguradora_id,placa,marca,modelo,color,anio_vehiculo,vin_o_serie,obs)
 VALUES (1,'Franco Lopez','Meylin  Amador','2024-01-01',1,'HAK5195','Suzuki','Dzire','Rojo','2018','MA3ZF63SXJA185480','x'),
@@ -103,3 +103,5 @@ INSERT INTO repuesto(estimacion_id,descripcion,precio)
 VALUES (3 ,'Moldura de guardafango cromada LH','0'),
 (3 ,'Via de Guardafango LH','0'),
 (3 ,'Seguros de lodera del. LH (4)','350');
+
+

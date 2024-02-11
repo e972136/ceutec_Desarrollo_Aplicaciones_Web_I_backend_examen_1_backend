@@ -1,2 +1,27 @@
+#### Aseguradora
+GET http://localhost:9090/api/aseguradora
+
+
+###
+POST http://localhost:9090/api/aseguradora
+Content-Type: application/json
+
+{
+    "nombre":"BANPAIS"
+}
+
 ####
+PUT http://localhost:9090/api/aseguradora/4
+Content-Type: application/json
+
+{
+    "nombre":"PATITO"
+}
+
+
+####
+DELETE http://localhost:9090/api/aseguradora/4
+
+
+#### Estimacion
 GET http://localhost:9090/api/estimacion
