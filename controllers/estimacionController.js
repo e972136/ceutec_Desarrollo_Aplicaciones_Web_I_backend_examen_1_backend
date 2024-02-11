@@ -18,9 +18,36 @@ const getEstimacion = async (req, res)=>{
     
 
     const sql = `select  * from estimacion`;
-    const result = await db.query(sql);
+    const resultEstimacion = await db.query(sql);
 
-    res.json(result);
+    let resultFinal=[];
+
+    for (let i = 0; i < resultEstimacion.length; i++) {
+        let estimacion = resultEstimacion[i];
+
+        let id = estimacion.id;
+        let asegurado = estimacion.asegurado;
+
+        const sqlRepuestos = `select * from reparacion where reparacion.estimacion_id = ${estimacion.id}`;
+        const repuestos = await db.query(sqlRepuestos);
+
+        const elemento = {
+            id,
+            asegurado,
+            repuestos
+        };
+
+
+        resultFinal.push(elemento);        
+    } 
+
+
+    
+
+    //const result = {resultEstimacion,resultRepuestos}
+
+    res.json(resultFinal);
+//    res.json(resultEstimacion);
 
 };
 
