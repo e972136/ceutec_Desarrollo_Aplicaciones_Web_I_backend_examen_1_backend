@@ -5,7 +5,7 @@ GET http://localhost:9090/api/estimacion
 #### Estimacion por id con su detalle
 GET http://localhost:9090/api/estimacion/4
 
-###
+### Agregar estimacion
 POST http://localhost:9090/api/estimacion
 Content-Type: application/json
 
@@ -23,7 +23,7 @@ Content-Type: application/json
     "obs": "x"    
 }
 
-####
+#### Actualizar estimacion
 PUT http://localhost:9090/api/estimacion/4
 Content-Type: application/json
 
@@ -42,6 +42,6 @@ Content-Type: application/json
 }
 
 
-####
+#### Borrar estimacion
 DELETE http://localhost:9090/api/estimacion/1
 
