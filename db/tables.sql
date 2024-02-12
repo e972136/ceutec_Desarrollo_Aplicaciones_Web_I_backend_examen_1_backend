@@ -59,12 +59,12 @@ CREATE TABLE repuesto(
 INSERT INTO aseguradora(nombre)
 VALUES ('Particular'),('Ficohsa Seguros'),('MAFFRE');
 
-INSERT INTO estimacion(id,asegurado,estimado_por,fecha_evaluacion,aseguradora_id,placa,marca,modelo,color,anio_vehiculo,vin_o_serie,obs)
-VALUES (1,'Franco Lopez','Meylin  Amador','2024-01-01',1,'HAK5195','Suzuki','Dzire','Rojo','2018','MA3ZF63SXJA185480','x'),
-(2,'Oscar Rene Aguilera','Mercy Velasquez','2024-01-01',1,'HED8273','Toyota','Hilux','Blanco tricapa','2022','8AJBA3CD501704581','x'),
-(3,'Ivone Elizabeth Varela Santos','Mercy Velasquez','2024-01-01',2,'HAA3997','Ford','Ranger','Silver','2017','LFPPXXMJ2PHR74683','x'),
-(4,'Coorporacion Dinant','Mercy Velasquez','2024-01-01',2,'HDQ3862','Toyota','Corolla','Blanco','2015','5YFBURHEXFP255965','x'),
-(5,'Jose Manuel Carcamo','Katerine Matute','2024-01-01',3,'S/P','Bajaj','Pulsar 150','Negro/Franjas Decorativas','2023','MD2A11CX1PCE00039','x');
+INSERT INTO estimacion(asegurado,estimado_por,fecha_evaluacion,aseguradora_id,placa,marca,modelo,color,anio_vehiculo,vin_o_serie,obs)
+VALUES ('Franco Lopez','Meylin  Amador','2024-01-01',1,'HAK5195','Suzuki','Dzire','Rojo','2018','MA3ZF63SXJA185480','x'),
+('Oscar Rene Aguilera','Mercy Velasquez','2024-01-01',1,'HED8273','Toyota','Hilux','Blanco tricapa','2022','8AJBA3CD501704581','x'),
+('Ivone Elizabeth Varela Santos','Mercy Velasquez','2024-01-01',2,'HAA3997','Ford','Ranger','Silver','2017','LFPPXXMJ2PHR74683','x'),
+('Coorporacion Dinant','Mercy Velasquez','2024-01-01',2,'HDQ3862','Toyota','Corolla','Blanco','2015','5YFBURHEXFP255965','x'),
+('Jose Manuel Carcamo','Katerine Matute','2024-01-01',3,'S/P','Bajaj','Pulsar 150','Negro/Franjas Decorativas','2023','MD2A11CX1PCE00039','x');
 
 INSERT INTO reparacion(estimacion_id,detalle_reparacion,precio)
 VALUES (1,'Reparar  y pintar  guardafango LH','0'),

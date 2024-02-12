@@ -1,68 +1,116 @@
 import { db } from '../db/conn.js';
 
 const postEstimacion = async (req, res)=>{
-    const {numero_cheque,id_banco,a_nombre_de,monto_cheque} = req.body;
 
-    const params = [numero_cheque,id_banco,a_nombre_de,monto_cheque];
+    const {asegurado,estimado_por,fecha_evaluacion,aseguradora_id,placa,marca,modelo,color,anio_vehiculo,vin_o_serie,obs}=req.body;
+    
 
-    const sql = `insert into estimacion(numero_cheque,id_banco,a_nombre_de,monto_cheque)
-                values ($1, $2, $3, $4) returning *
-                `;
+    const params =[
+        asegurado,estimado_por,fecha_evaluacion,aseguradora_id,placa,marca,modelo,color,anio_vehiculo,vin_o_serie,obs
+    ];
+
+
+    const sql = `INSERT INTO estimacion(asegurado,estimado_por,fecha_evaluacion,aseguradora_id,placa,marca,modelo,color,anio_vehiculo,vin_o_serie,obs)
+    VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) returning *`;
+
+    console.log(sql);
+
     const result = await db.query(sql,params);
 
     res.json(result);
 
 };
 
+const getEstimacionById = async (req, res) => {
+    const {id} = req.params;
+    const params =[        
+        id
+    ]; 
+    const sql = `select  * from estimacion where id = $1`;
+    const resultEstimacionSql = await db.query(sql,params);
+
+    const resultEstimacion = resultEstimacionSql[0];    
+    const asegurado = resultEstimacion.asegurado;
+    const estimado_por= resultEstimacion.estimado_por;
+    const fecha_evaluacion= resultEstimacion.fecha_evaluacion;
+    const aseguradora_id= resultEstimacion.aseguradora_id;
+    const placa= resultEstimacion.placa;
+    const marca= resultEstimacion.marca;
+    const modelo= resultEstimacion.modelo;
+    const color= resultEstimacion.color;
+    const anio_vehiculo= resultEstimacion.anio_vehiculo;
+    const vin_o_serie= resultEstimacion.vin_o_serie;
+    const obs= resultEstimacion.obs;
+
+    const sqlReparacion = `select * from reparacion where reparacion.estimacion_id = ${id}`;
+    const reparacion = await db.query(sqlReparacion);
+
+    const sqlReparacion_adicional = `select * from reparacion_adicional where reparacion_adicional.estimacion_id = ${id}`;
+    const reparacion_adicional = await db.query(sqlReparacion_adicional);
+
+    const sqlRepuesto = `select * from repuesto where repuesto.estimacion_id = ${id}`;
+    const repuesto = await db.query(sqlRepuesto);
+
+    const elemento = {
+        id,
+        asegurado,
+        estimado_por,
+        fecha_evaluacion,
+        aseguradora_id,
+        placa,
+        marca,
+        modelo,
+        color,
+        anio_vehiculo,
+        vin_o_serie,
+        obs,
+        reparacion,
+        reparacion_adicional,
+        repuesto
+    };
+
+
+    res.json(elemento);
+
+}
+
+
 const getEstimacion = async (req, res)=>{
     
 
-    const sql = `select  * from estimacion`;
+    const sql = `select  aseguradora.nombre as nombre_aseguradora, estimacion.* from estimacion
+                inner join aseguradora on aseguradora.id = estimacion.aseguradora_id`;
     const resultEstimacion = await db.query(sql);
 
-    let resultFinal=[];
-
-    for (let i = 0; i < resultEstimacion.length; i++) {
-        let estimacion = resultEstimacion[i];
-
-        let id = estimacion.id;
-        let asegurado = estimacion.asegurado;
-
-        const sqlRepuestos = `select * from reparacion where reparacion.estimacion_id = ${estimacion.id}`;
-        const repuestos = await db.query(sqlRepuestos);
-
-        const elemento = {
-            id,
-            asegurado,
-            repuestos
-        };
-
-
-        resultFinal.push(elemento);        
-    } 
-
-
-    
-
-    //const result = {resultEstimacion,resultRepuestos}
-
-    res.json(resultFinal);
-//    res.json(resultEstimacion);
+    res.json(resultEstimacion);
 
 };
 
 const putEstimacion = async (req, res)=>{
-    const {numero_cheque,a_nombre_de,monto_cheque}=req.body;
+    const {asegurado,estimado_por,fecha_evaluacion,aseguradora_id,placa,marca,modelo,color,anio_vehiculo,vin_o_serie,obs}=req.body;
     const {id} = req.params;
 
     const params =[
-        numero_cheque,a_nombre_de,monto_cheque,
+        asegurado,estimado_por,fecha_evaluacion,aseguradora_id,placa,marca,modelo,color,anio_vehiculo,vin_o_serie,obs,
         id
     ];
 
     const sql = `update estimacion 
-                    set numero_cheque = $1, a_nombre_de = $2 , monto_cheque = $3
-                    where id = $4 returning *`;
+                    set 
+                    asegurado = $1,
+                    estimado_por = $2,
+                    fecha_evaluacion = $3,
+                    aseguradora_id = $4,
+                    placa = $5,
+                    marca = $6,
+                    modelo = $7,
+                    color = $8,
+                    anio_vehiculo = $9,
+                    vin_o_serie = $10,
+                    obs = $11                    
+                    where id = $12 returning *`;
+
+    console.log(sql);
 
     const result = await db.query(sql,params);
 
@@ -90,6 +138,7 @@ const delEstimacion = async (req, res)=>{
 export {
     postEstimacion,
     getEstimacion,
+    getEstimacionById,
     putEstimacion,
     delEstimacion
 };
